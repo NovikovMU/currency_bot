@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  telegram:
+    build:
+      context: .
+      dockerfile: Dockerfile.telegram
+    container_name: telegram_container
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    restart: always
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  redis_data:
